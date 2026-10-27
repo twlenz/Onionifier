@@ -2,6 +2,8 @@
 
 A Chrome extension that redirects you to [The Onion](https://theonion.com/) whenever you visit a news website.
 
+_Built with Claude code_
+
 ## Install
 
 1. Clone or download this repository.
