@@ -11,18 +11,37 @@ A Chrome extension that redirects you to [The Onion](https://theonion.com/) when
 
 Now visit e.g. `bbc.com` and you'll land on The Onion instead.
 
+## Choosing which sites get sent to The Onion
+
+Everything is changed from inside Chrome; no files to edit.
+
+**From the toolbar.** Click the Onionifier icon (pin it from the puzzle-piece menu) on any site:
+
+- **Send this site to The Onion** adds the site and reloads the tab, which takes you straight to The Onion.
+- **Allow this site** makes the site load normally.
+- **On** turns all redirects off or on at once.
+
+**From the settings page.** Click **Manage all sites** in the popup, or right-click the icon and choose **Options**. The page has two lists:
+
+- **Sent to The Onion**: these sites, and all of their subdomains, redirect.
+- **Always allowed**: these load normally. Use this for exceptions, e.g. send `yahoo.com` to The Onion but allow `mail.yahoo.com`.
+
+Type a domain or paste any link into **Add a site** and pick a list. Each site has buttons to move it to the other list or remove it, there's a search box, and **Reset to the default list** restores the original ~100 news sites.
+
+Settings are saved with Chrome sync, so they follow you to other computers where you're signed in to Chrome with this extension installed.
+
 ## How it works
 
-The extension uses Chrome's [`declarativeNetRequest`](https://developer.chrome.com/docs/extensions/reference/api/declarativeNetRequest) API with a single static rule (`rules.json`) that redirects top-level page loads on any listed domain, or any of its subdomains, to `https://theonion.com/`. There is no background script and no page content is read.
+`news-sites.json` is the default list, copied into Chrome storage on first install. Whenever the lists change, the extension rebuilds a single [`declarativeNetRequest`](https://developer.chrome.com/docs/extensions/reference/api/declarativeNetRequest) rule that redirects top-level page loads on the "Sent to The Onion" domains to `https://theonion.com/`, with the "Always allowed" domains excluded. The browser applies the rule itself; the extension never reads page content.
 
-## Editing the site list
+Because you can add any site, the extension needs permission to redirect on all websites, so Chrome's install prompt says it can "read and change all your data on all websites".
 
-The list of news sites lives in `news-sites.json`. After editing it, regenerate `rules.json` and the manifest's `host_permissions`:
-
-```sh
-node scripts/build.js
-```
-
-Then click the reload button for Onionifier on `chrome://extensions`.
-
-Note that each entry covers the whole domain, so `nytimes.com` also catches NYT Games and NYT Cooking.
+| File | Purpose |
+| --- | --- |
+| `manifest.json` | Extension manifest |
+| `news-sites.json` | Default list of news sites |
+| `sites.js` | Shared logic: settings storage, domain parsing, building the redirect rule |
+| `background.js` | Installs the default list and keeps the rule up to date |
+| `popup.html`, `popup.js` | Toolbar popup |
+| `options.html`, `options.js` | Settings page |
+| `styles.css` | Shared styles (light and dark mode) |

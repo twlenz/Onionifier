@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Onionifier</title>
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      body {
+        width: 300px;
+        padding: 14px;
+        display: grid;
+        gap: 12px;
+      }
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      #site {
+        font-weight: 600;
+        word-break: break-all;
+      }
+      .buttons {
+        display: grid;
+        gap: 6px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Onionifier</h1>
+      <label class="switch"><input type="checkbox" id="enabled" /> On</label>
+    </header>
+
+    <section>
+      <p id="site"></p>
+      <p id="status" class="muted"></p>
+    </section>
+
+    <div class="buttons">
+      <button id="redirect" class="primary">Send this site to The Onion</button>
+      <button id="allow">Allow this site</button>
+    </div>
+
+    <button id="manage" class="link">Manage all sites</button>
+
+    <script type="module" src="popup.js"></script>
+  </body>
+</html>
