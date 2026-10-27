@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Onionifier settings</title>
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      main {
+        max-width: 880px;
+        margin: 0 auto;
+        padding: 24px 16px 48px;
+        display: grid;
+        gap: 20px;
+      }
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+      .add {
+        display: grid;
+        gap: 8px;
+        padding: 16px;
+        background: var(--surface);
+        border-radius: 8px;
+      }
+      .add-row {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+      .add-row input {
+        flex: 1 1 220px;
+      }
+      .lists {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+        align-items: start;
+      }
+      .list-header {
+        margin-bottom: 8px;
+      }
+      ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        max-height: 60vh;
+        overflow-y: auto;
+      }
+      li {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 8px 6px 12px;
+        border-top: 1px solid var(--border);
+      }
+      li:first-child {
+        border-top: none;
+      }
+      li .domain {
+        flex: 1;
+        min-width: 0;
+        overflow-wrap: anywhere;
+      }
+      li button {
+        padding: 3px 8px;
+        font-size: 13px;
+        flex-shrink: 0;
+      }
+      li.empty {
+        color: var(--muted);
+        padding: 12px;
+      }
+      footer {
+        display: flex;
+        justify-content: flex-end;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header>
+        <h1>Onionifier settings</h1>
+        <label class="switch"><input type="checkbox" id="enabled" /> Onionifier is on</label>
+      </header>
+
+      <form class="add" id="add-form">
+        <label for="add-input"><strong>Add a site</strong> <span class="muted">— type a domain or paste a link</span></label>
+        <div class="add-row">
+          <input type="text" id="add-input" placeholder="example.com" autocomplete="off" />
+          <button type="submit" class="primary" data-mode="redirect">Send to The Onion</button>
+          <button type="submit" data-mode="allow">Always allow</button>
+        </div>
+        <p class="error" id="add-error" role="alert"></p>
+      </form>
+
+      <input type="search" id="filter" placeholder="Search sites" aria-label="Search sites" />
+
+      <div class="lists">
+        <section>
+          <div class="list-header">
+            <h2>Sent to The Onion (<span id="redirect-count">0</span>)</h2>
+            <p class="muted">Visiting these sites, or any of their subdomains, takes you to The Onion.</p>
+          </div>
+          <ul id="redirect-list"></ul>
+        </section>
+        <section>
+          <div class="list-header">
+            <h2>Always allowed (<span id="allow-count">0</span>)</h2>
+            <p class="muted">These load normally, even if they're a subdomain of a site on the other list.</p>
+          </div>
+          <ul id="allow-list"></ul>
+        </section>
+      </div>
+
+      <footer>
+        <button id="reset">Reset to the default list</button>
+      </footer>
+    </main>
+    <script type="module" src="options.js"></script>
+  </body>
+</html>

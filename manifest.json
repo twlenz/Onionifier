@@ -1,0 +1,17 @@
+{
+  "manifest_version": 3,
+  "name": "Onionifier",
+  "version": "1.1.0",
+  "description": "Redirects news websites to The Onion.",
+  "permissions": ["declarativeNetRequestWithHostAccess", "storage"],
+  "host_permissions": ["*://*/*"],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "action": {
+    "default_title": "Onionifier",
+    "default_popup": "popup.html"
+  },
+  "options_page": "options.html"
+}
